@@ -15,6 +15,9 @@
 .title {
     font-size: 30px;
 }
+.inactive {
+ opacity: 0.4;
+}
 #display {
     font-size: 35px;
 }

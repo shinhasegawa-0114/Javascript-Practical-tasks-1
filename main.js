@@ -6,18 +6,60 @@ let reset = document.getElementById("reset");
 let time = 0;
 let timerid = null;
 
+//初期状態
+function initial() {   
+   start.classList.remove('inactive');　//活性
+   stop.classList.add('inactive'); //非活性
+   reset.classList.add('inactive');　//非活性
+ }
+ //スタートボタン押下時
+ function running() {  
+   start.classList.add('inactive');　//非活性
+   stop.classList.remove('inactive');　//活性
+   reset.classList.add('inactive');　//非活性
+ }
+//ストップボタン押下時
+ function stopped() { 
+   start.classList.remove('inactive');　//活性
+   stop.classList.add('inactive');　//非活性
+   reset.classList.remove('inactive');　//活性
+ }
+
+
+initial(); //ボタンの初期状態の設定
+
+
 start.addEventListener('click' , (event) => {
+   //↓非活性(inactive)かどうかチェックする
+   //活性の状態で押したか or 非活性の状態で押したか
+   if (start.classList.contains('inactive') === true) {
+     return;
+   }
+   running();
+   
    timerid = setInterval(() => {
       time +=10;
       display.innerText = stopWatch(time);
    }, 10);
 });
 
+
 stop.addEventListener('click' , (event) => {
+   if (stop.classList.contains('inactive') === true) {
+     return;
+   }
+   stopped();
+   
    clearInterval(timerid);
 });
 
+
 reset.addEventListener('click' , (event) => {
+   if (reset.classList.contains('inactive') === true) {
+     return;
+   }
+  initial();
+  
    time = 0;
    display.innerText = stopWatch(time);
 });
@@ -35,10 +77,10 @@ function stopWatch(time) {
    let min = Math.floor(tempsec/60);
    
    //.padStartを入れることで桁数
-   let padding_msec = String(msec).padStart(3, '0');
-   let padding_sec = String(sec).padStart(2, '0');
-   let padding_min = String(min).padStart(2, '0');
+   let paddingMsec = String(msec).padStart(3, '0');
+   let paddingSec = String(sec).padStart(2, '0');
+   let paddingMin = String(min).padStart(2, '0');
    
-   return padding_min + ":" + padding_sec +":"+ padding_msec;
+   return paddingMin + ":" + paddingSec +":"+ paddingMsec;
    
 }
